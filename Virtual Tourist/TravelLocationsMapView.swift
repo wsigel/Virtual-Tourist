@@ -59,7 +59,6 @@ class TravelLocationsMapView: UIViewController, UIGestureRecognizerDelegate {
             if let placemark = placemarks.first {
                 let cityAndCountry = placemark.locality! + ", " + placemark.country!
                 let annotation = MKPointAnnotation()
-                
                 annotation.coordinate = placemark.location!.coordinate
                 annotation.title = cityAndCountry
                 mapView.addAnnotation(annotation)
