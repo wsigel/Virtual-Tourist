@@ -41,6 +41,7 @@ class TravelLocationsMapViewDelegate: NSObject, MKMapViewDelegate {
                     app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
                 }
             }
+            print("callout tapped")
         }
     }
     
