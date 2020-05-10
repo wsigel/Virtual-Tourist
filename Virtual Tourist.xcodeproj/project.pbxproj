@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		6A5093F724633532009EF9B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5093F624633532009EF9B2 /* AppDelegate.swift */; };
 		6A5093F924633532009EF9B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5093F824633532009EF9B2 /* SceneDelegate.swift */; };
-		6A5093FB24633532009EF9B2 /* TravelLocationsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5093FA24633532009EF9B2 /* TravelLocationsMapView.swift */; };
+		6A5093FB24633532009EF9B2 /* TravelLocationsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5093FA24633532009EF9B2 /* TravelLocationsMapViewController.swift */; };
 		6A5093FE24633532009EF9B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A5093FC24633532009EF9B2 /* Main.storyboard */; };
 		6A50940024633532009EF9B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A5093FF24633532009EF9B2 /* Assets.xcassets */; };
 		6A50940324633532009EF9B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A50940124633532009EF9B2 /* LaunchScreen.storyboard */; };
 		6A50940F24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A50940E24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift */; };
+		6AC2568B2467014B00DF9A33 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6AC256892467014B00DF9A33 /* VirtualTourist.xcdatamodeld */; };
+		6AC2568D246707FB00DF9A33 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC2568C246707FB00DF9A33 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6A5093F324633532009EF9B2 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A5093F624633532009EF9B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A5093F824633532009EF9B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6A5093FA24633532009EF9B2 /* TravelLocationsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapView.swift; sourceTree = "<group>"; };
+		6A5093FA24633532009EF9B2 /* TravelLocationsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapViewController.swift; sourceTree = "<group>"; };
 		6A5093FD24633532009EF9B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6A5093FF24633532009EF9B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A50940224633532009EF9B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A50940424633532009EF9B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A50940E24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapViewDelegate.swift; sourceTree = "<group>"; };
+		6AC2568A2467014B00DF9A33 /* VirtualTourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTourist.xcdatamodel; sourceTree = "<group>"; };
+		6AC2568C246707FB00DF9A33 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +67,6 @@
 				6A50940B2463358D009EF9B2 /* Model */,
 				6A5093F624633532009EF9B2 /* AppDelegate.swift */,
 				6A5093F824633532009EF9B2 /* SceneDelegate.swift */,
-				6A5093FA24633532009EF9B2 /* TravelLocationsMapView.swift */,
 				6A50940A2463354E009EF9B2 /* View */,
 				6A50940424633532009EF9B2 /* Info.plist */,
 			);
@@ -83,6 +86,8 @@
 		6A50940B2463358D009EF9B2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6AC256892467014B00DF9A33 /* VirtualTourist.xcdatamodeld */,
+				6AC2568C246707FB00DF9A33 /* DataController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -90,6 +95,7 @@
 		6A50940C2463359B009EF9B2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6A5093FA24633532009EF9B2 /* TravelLocationsMapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -173,7 +179,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A5093FB24633532009EF9B2 /* TravelLocationsMapView.swift in Sources */,
+				6A5093FB24633532009EF9B2 /* TravelLocationsMapViewController.swift in Sources */,
+				6AC2568D246707FB00DF9A33 /* DataController.swift in Sources */,
+				6AC2568B2467014B00DF9A33 /* VirtualTourist.xcdatamodeld in Sources */,
 				6A50940F24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift in Sources */,
 				6A5093F724633532009EF9B2 /* AppDelegate.swift in Sources */,
 				6A5093F924633532009EF9B2 /* SceneDelegate.swift in Sources */,
@@ -372,6 +380,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6AC256892467014B00DF9A33 /* VirtualTourist.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6AC2568A2467014B00DF9A33 /* VirtualTourist.xcdatamodel */,
+			);
+			currentVersion = 6AC2568A2467014B00DF9A33 /* VirtualTourist.xcdatamodel */;
+			path = VirtualTourist.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6A5093EB24633532009EF9B2 /* Project object */;
 }
