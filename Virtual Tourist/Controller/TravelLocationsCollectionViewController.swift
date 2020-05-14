@@ -20,21 +20,11 @@ class TravelLocationsCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let coordinate = selectedCoordinate {
-            FlickrClient.searchForPhotos(latitude: coordinate.latitude, longitude: coordinate.longitude, completion: handleSearchResponse(response:error:))
-        }
+//        if let coordinate = selectedCoordinate {
+//            FlickrClient.searchForPhotos(latitude: coordinate.latitude, longitude: coordinate.longitude, completion: handleSearchResponse(response:error:))
+//        }
     }
     
-    func handleSearchResponse(response: PhotosResponse?, error: Error?){
-        if error == nil {
-            let photos = response?.photos
-            let page = photos?.page
-            let pages = photos?.pages
-            let photo = photos?.photo
-            
-        } else {
-            print(error)
-        }
-    }
+    
     
 }

@@ -70,9 +70,38 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 annotation.coordinate = tappedCoordinate
                 annotation.title = "Long: \(tappedCoordinate.longitude) Lat: \(tappedCoordinate.latitude)"
                 mapView.addAnnotation(annotation)
-                // add retrieval here
-                //savePin(coordinate: tappedCoordinate)
+                FlickrClient.searchForPhotos(latitude: tappedCoordinate.latitude, longitude: tappedCoordinate.longitude, completion: handlePinAction(response:coordinate:error:))
             }
+        }
+    }
+    
+    func handlePinAction(response: PhotosResponse?, coordinate: CLLocationCoordinate2D?, error: Error?){
+        if error == nil {
+            guard let latitude = coordinate?.latitude, let longitude = coordinate?.longitude, let collection = response else {
+                // notify user here
+                return
+            }
+            
+            let newPin = Pin(context: dataController.viewContext)
+            newPin.latitude = latitude
+            newPin.longitude = longitude
+            newPin.page = Int64(collection.photos.page)
+            newPin.pages = Int64(collection.photos.pages)
+            
+            let photoCore = collection.photos.photo
+            if photoCore.count > 0 {
+                newPin.farm = Int64(photoCore[0].farm)
+                newPin.server = photoCore[0].server
+                for individualPhoto in photoCore {
+                    let photo = Photo(context: dataController.viewContext)
+                    photo.id = individualPhoto.id
+                    photo.secret = individualPhoto.secret
+                    newPin.addToPhotos(photo)
+                }
+            }
+            try? dataController.viewContext.save()
+        } else {
+            print(error!)
         }
     }
 }

@@ -46,17 +46,20 @@ class FlickrClient {
         }
     }
     
-    class func searchForPhotos(latitude: Double?, longitude: Double?, completion: @escaping(PhotosResponse?, Error?) -> Void){
+    class func searchForPhotos(latitude: Double?, longitude: Double?, completion: @escaping(PhotosResponse?, CLLocationCoordinate2D?, Error?) -> Void){
+        
         
         guard let latitude = latitude, let longitude = longitude else {
             return
         }
         SearchCriteria.latitude = latitude
         SearchCriteria.longitude = longitude
+        let pinCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
         let task = URLSession.shared.dataTask(with: Endpoints.searchForPhotos.url) { (data, response, error) in
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion(nil, error)
+                    completion(nil, nil, error)
                 }
                 return
             }
@@ -64,11 +67,11 @@ class FlickrClient {
             do {
                 let responseObject = try decoder.decode(PhotosResponse.self, from: data)
                 DispatchQueue.main.async {
-                        completion(responseObject, nil)
+                        completion(responseObject, pinCoordinate, nil)
                 }
             } catch {
                 DispatchQueue.main.async {
-                    completion(nil, error)
+                    completion(nil, nil, error)
                 }
             }
         }
