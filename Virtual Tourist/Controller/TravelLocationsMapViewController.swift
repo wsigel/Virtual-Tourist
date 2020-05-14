@@ -22,6 +22,7 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        travelLocationsMapViewDelegate.parent = self
         mapView.delegate = travelLocationsMapViewDelegate
         
         // restore settings for region & zoom level
@@ -69,7 +70,8 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 annotation.coordinate = tappedCoordinate
                 annotation.title = "Long: \(tappedCoordinate.longitude) Lat: \(tappedCoordinate.latitude)"
                 mapView.addAnnotation(annotation)
-                savePin(coordinate: tappedCoordinate)
+                // add retrieval here
+                //savePin(coordinate: tappedCoordinate)
             }
         }
     }
