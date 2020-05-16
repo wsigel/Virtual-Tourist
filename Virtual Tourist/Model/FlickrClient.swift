@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import CoreData
 
 class FlickrClient {
     
@@ -78,7 +79,33 @@ class FlickrClient {
         task.resume()
     }
     
-    class func getPhoto() {
-        
+    class func getPhotosFor(pin: Pin?, completion: @escaping(Pin?, Photo?, Error?) -> Void) {
+        guard let pin = pin else {
+            return
+        }
+        if pin.photos!.count > 0 {
+            SearchCriteria.farmId = Int(pin.farm)
+            SearchCriteria.serverId = pin.server!
+            
+            let entries = pin.photos! as! Set<Photo>
+            
+            for entry in entries {
+                let task = URLSession.shared.dataTask(with: Endpoints.getPhoto.url) { (data, reponse, error) in
+                    if error != nil {
+                        completion(nil, nil, error)
+                    }
+                    guard let data = data else {
+                        
+                        completion(pin, entry, nil)
+                        return
+                    }
+                    entry.image = data
+                    completion(pin, entry, nil)
+                }
+                task.resume()
+            }
+            
+        }
     }
+    
 }

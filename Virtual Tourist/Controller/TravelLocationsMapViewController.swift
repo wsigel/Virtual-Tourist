@@ -14,7 +14,6 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
 
     
     @IBOutlet weak var mapView: MKMapView!
-    let travelLocationsMapViewDelegate: TravelLocationsMapViewDelegate = TravelLocationsMapViewDelegate()
     var pins: [Pin] = []
     
     var dataController: DataController!
@@ -22,9 +21,7 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        travelLocationsMapViewDelegate.parent = self
-        mapView.delegate = travelLocationsMapViewDelegate
-        
+        mapView.delegate = self
         // restore settings for region & zoom level
         if UserDefaults.standard.bool(forKey: "didStoreLocation") {
             let center = CLLocationCoordinate2D(latitude: UserDefaults.standard.double(forKey: "latitude"), longitude: UserDefaults.standard.double(forKey: "longitude"))
@@ -106,3 +103,48 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     }
 }
 
+extension TravelLocationsMapViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.pinTintColor = .red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let coordinate = view.annotation?.coordinate {
+            
+            let controller2Present = PhotoAlbumViewController()
+            
+            controller2Present.selectedCoordinate = coordinate
+            
+            controller2Present.dataController = dataController
+            //performSegue(withIdentifier: "showCollection", sender: nil)
+            navigationController?.pushViewController(controller2Present, animated: true)
+            //parent?.present(controller2Present, animated: true, completion: nil)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        UserDefaults.standard.set(true, forKey: "didStoreLocation")
+        let newRegion = mapView.region
+        let newCenter = newRegion.center
+        let newSpan = newRegion.span
+        UserDefaults.standard.set(newCenter.latitude, forKey: "latitude")
+        UserDefaults.standard.set(newCenter.longitude, forKey: "longitude")
+        UserDefaults.standard.set(newSpan.latitudeDelta, forKey: "latitudeDelta")
+        UserDefaults.standard.set(newSpan.longitudeDelta, forKey: "longitudeDelta")
+    }
+}

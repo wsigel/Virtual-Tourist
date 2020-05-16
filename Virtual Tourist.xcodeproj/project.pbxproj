@@ -15,10 +15,9 @@
 		6A5093FE24633532009EF9B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A5093FC24633532009EF9B2 /* Main.storyboard */; };
 		6A50940024633532009EF9B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A5093FF24633532009EF9B2 /* Assets.xcassets */; };
 		6A50940324633532009EF9B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A50940124633532009EF9B2 /* LaunchScreen.storyboard */; };
-		6A50940F24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A50940E24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift */; };
 		6AC2568B2467014B00DF9A33 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6AC256892467014B00DF9A33 /* VirtualTourist.xcdatamodeld */; };
 		6AC2568D246707FB00DF9A33 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC2568C246707FB00DF9A33 /* DataController.swift */; };
-		6AF32526246B09F300831CB9 /* TravelLocationsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF32525246B09F300831CB9 /* TravelLocationsCollectionViewController.swift */; };
+		6AF32526246B09F300831CB9 /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF32525246B09F300831CB9 /* PhotoAlbumViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,10 +31,9 @@
 		6A5093FF24633532009EF9B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A50940224633532009EF9B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A50940424633532009EF9B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6A50940E24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapViewDelegate.swift; sourceTree = "<group>"; };
 		6AC2568A2467014B00DF9A33 /* VirtualTourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTourist.xcdatamodel; sourceTree = "<group>"; };
 		6AC2568C246707FB00DF9A33 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		6AF32525246B09F300831CB9 /* TravelLocationsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsCollectionViewController.swift; sourceTree = "<group>"; };
+		6AF32525246B09F300831CB9 /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				6A5093FA24633532009EF9B2 /* TravelLocationsMapViewController.swift */,
-				6AF32525246B09F300831CB9 /* TravelLocationsCollectionViewController.swift */,
+				6AF32525246B09F300831CB9 /* PhotoAlbumViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -112,7 +110,6 @@
 		6A50940D24633852009EF9B2 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				6A50940E24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -193,8 +190,7 @@
 				6A00348E2469C73600C52BA7 /* FlickrClient.swift in Sources */,
 				6AC2568B2467014B00DF9A33 /* VirtualTourist.xcdatamodeld in Sources */,
 				6A0034902469D48800C52BA7 /* PhotosResponse.swift in Sources */,
-				6A50940F24633884009EF9B2 /* TravelLocationsMapViewDelegate.swift in Sources */,
-				6AF32526246B09F300831CB9 /* TravelLocationsCollectionViewController.swift in Sources */,
+				6AF32526246B09F300831CB9 /* PhotoAlbumViewController.swift in Sources */,
 				6A5093F724633532009EF9B2 /* AppDelegate.swift in Sources */,
 				6A5093F924633532009EF9B2 /* SceneDelegate.swift in Sources */,
 			);
