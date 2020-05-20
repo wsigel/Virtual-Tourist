@@ -40,18 +40,19 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 let coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitude)
                 
                 annotation.coordinate = coordinate
-                annotation.title = pin.location
+                //annotation.title = pin.location
                 mapView.addAnnotation(annotation)
             }
         }
         
     }
+    
+    
 
     func savePin(coordinate: CLLocationCoordinate2D){
         let newPin = Pin(context: dataController.viewContext)
         newPin.longitude = coordinate.longitude
         newPin.latitude = coordinate.latitude
-        newPin.location = "Long: \(coordinate.longitude) Lat: \(coordinate.latitude)"
         // put error handling here
         try? dataController.viewContext.save()
     }
@@ -87,12 +88,12 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
             
             let photoCore = collection.photos.photo
             if photoCore.count > 0 {
-                newPin.farm = Int64(photoCore[0].farm)
-                newPin.server = photoCore[0].server
                 for individualPhoto in photoCore {
                     let photo = Photo(context: dataController.viewContext)
                     photo.id = individualPhoto.id
                     photo.secret = individualPhoto.secret
+                    photo.farm = Int64(individualPhoto.farm)
+                    photo.server = individualPhoto.server
                     newPin.addToPhotos(photo)
                 }
             }
@@ -123,17 +124,16 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         return pinView
     }
     
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let coordinate = view.annotation?.coordinate {
             
-            let controller2Present = PhotoAlbumViewController()
-            
-            controller2Present.selectedCoordinate = coordinate
-            
-            controller2Present.dataController = dataController
-            //performSegue(withIdentifier: "showCollection", sender: nil)
-            navigationController?.pushViewController(controller2Present, animated: true)
-            //parent?.present(controller2Present, animated: true, completion: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as! PhotoAlbumViewController
+            vc.selectedCoordinate = coordinate
+            vc.dataController = dataController
+            mapView.deselectAnnotation(view.annotation, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     

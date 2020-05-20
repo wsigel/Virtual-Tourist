@@ -17,7 +17,8 @@
 		6A50940324633532009EF9B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A50940124633532009EF9B2 /* LaunchScreen.storyboard */; };
 		6AC2568B2467014B00DF9A33 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6AC256892467014B00DF9A33 /* VirtualTourist.xcdatamodeld */; };
 		6AC2568D246707FB00DF9A33 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC2568C246707FB00DF9A33 /* DataController.swift */; };
-		6AF32526246B09F300831CB9 /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF32525246B09F300831CB9 /* PhotoAlbumViewController.swift */; };
+		6AEEF16C2475834900F33A0F /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEF16B2475834900F33A0F /* PhotoAlbumViewController.swift */; };
+		6AEEF16E2475868000F33A0F /* PhotoAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEF16D2475868000F33A0F /* PhotoAlbumCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +34,8 @@
 		6A50940424633532009EF9B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AC2568A2467014B00DF9A33 /* VirtualTourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTourist.xcdatamodel; sourceTree = "<group>"; };
 		6AC2568C246707FB00DF9A33 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		6AF32525246B09F300831CB9 /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
+		6AEEF16B2475834900F33A0F /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
+		6AEEF16D2475868000F33A0F /* PhotoAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				6A5093FC24633532009EF9B2 /* Main.storyboard */,
 				6A5093FF24633532009EF9B2 /* Assets.xcassets */,
 				6A50940124633532009EF9B2 /* LaunchScreen.storyboard */,
+				6AEEF16D2475868000F33A0F /* PhotoAlbumCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -102,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				6A5093FA24633532009EF9B2 /* TravelLocationsMapViewController.swift */,
-				6AF32525246B09F300831CB9 /* PhotoAlbumViewController.swift */,
+				6AEEF16B2475834900F33A0F /* PhotoAlbumViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -187,10 +190,11 @@
 			files = (
 				6A5093FB24633532009EF9B2 /* TravelLocationsMapViewController.swift in Sources */,
 				6AC2568D246707FB00DF9A33 /* DataController.swift in Sources */,
+				6AEEF16E2475868000F33A0F /* PhotoAlbumCell.swift in Sources */,
 				6A00348E2469C73600C52BA7 /* FlickrClient.swift in Sources */,
+				6AEEF16C2475834900F33A0F /* PhotoAlbumViewController.swift in Sources */,
 				6AC2568B2467014B00DF9A33 /* VirtualTourist.xcdatamodeld in Sources */,
 				6A0034902469D48800C52BA7 /* PhotosResponse.swift in Sources */,
-				6AF32526246B09F300831CB9 /* PhotoAlbumViewController.swift in Sources */,
 				6A5093F724633532009EF9B2 /* AppDelegate.swift in Sources */,
 				6A5093F924633532009EF9B2 /* SceneDelegate.swift in Sources */,
 			);

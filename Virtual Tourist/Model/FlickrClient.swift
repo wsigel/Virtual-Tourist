@@ -84,12 +84,12 @@ class FlickrClient {
             return
         }
         if pin.photos!.count > 0 {
-            SearchCriteria.farmId = Int(pin.farm)
-            SearchCriteria.serverId = pin.server!
             
             let entries = pin.photos! as! Set<Photo>
             
             for entry in entries {
+                SearchCriteria.farmId = Int(entry.farm)
+                SearchCriteria.serverId = entry.server!
                 let task = URLSession.shared.dataTask(with: Endpoints.getPhoto.url) { (data, reponse, error) in
                     if error != nil {
                         completion(nil, nil, error)

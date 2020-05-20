@@ -36,7 +36,6 @@
                     <navigationItem key="navigationItem" title="Virtual Tourist Map" id="1QS-0R-aKS"/>
                     <connections>
                         <outlet property="mapView" destination="NFj-Xs-vRS" id="1qF-01-lfc"/>
-                        <segue destination="9ez-cA-D7y" kind="show" identifier="showCollection" id="nEW-bY-RUJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -48,56 +47,77 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="114.50892857142857"/>
         </scene>
-        <!--Photo Album-->
-        <scene sceneID="XG0-UI-NSC">
+        <!--Photo Album View Controller-->
+        <scene sceneID="cwP-Tu-dIP">
             <objects>
-                <viewController id="9ez-cA-D7y" customClass="PhotoAlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nPI-sF-UNb">
+                <viewController storyboardIdentifier="PhotoAlbumViewController" id="4a0-zm-CaS" customClass="PhotoAlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q05-4k-IPh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqv-Cc-G7F">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOC-IB-kwh">
                                 <rect key="frame" x="20" y="832" width="374" height="30"/>
                                 <state key="normal" title="New Album"/>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6pN-hG-i3Y">
-                                <rect key="frame" x="20" y="88" width="374" height="744"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UwK-aR-896">
-                                    <size key="itemSize" width="128" height="128"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wDc-zg-quh" userLabel="PhotoAlbumCollectionView">
+                                <rect key="frame" x="20" y="44" width="374" height="788"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4zl-fD-9eA">
+                                    <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="5" minY="10" maxX="5" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="1bh-Fh-YNb">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCell" id="HwR-JG-qxN" customClass="PhotoAlbumCell" customModule="Virtual_Tourist" customModuleProvider="target">
+                                        <rect key="frame" x="5" y="10" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EIu-0s-Kuh">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mqg-2g-o7G">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H5X-WG-jdT" userLabel="PhotoAlbumImageView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="H5X-WG-jdT" firstAttribute="top" secondItem="mqg-2g-o7G" secondAttribute="top" id="CXj-O9-58M"/>
+                                                <constraint firstAttribute="bottom" secondItem="H5X-WG-jdT" secondAttribute="bottom" id="HJK-Pk-qJk"/>
+                                                <constraint firstAttribute="trailing" secondItem="H5X-WG-jdT" secondAttribute="trailing" id="Kto-y8-0zJ"/>
+                                                <constraint firstItem="H5X-WG-jdT" firstAttribute="leading" secondItem="mqg-2g-o7G" secondAttribute="leading" id="ZNf-31-s1b"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="photoAlbumImageView" destination="H5X-WG-jdT" id="0FZ-e1-1iD"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="4a0-zm-CaS" id="qhd-MC-thi"/>
+                                    <outlet property="delegate" destination="4a0-zm-CaS" id="TQa-54-VDr"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="3hr-t9-Odm" firstAttribute="trailing" secondItem="6pN-hG-i3Y" secondAttribute="trailing" constant="20" id="12A-HV-Ir9"/>
-                            <constraint firstItem="Oqv-Cc-G7F" firstAttribute="bottom" secondItem="3hr-t9-Odm" secondAttribute="bottom" id="FY2-oL-z0q"/>
-                            <constraint firstItem="3hr-t9-Odm" firstAttribute="trailing" secondItem="Oqv-Cc-G7F" secondAttribute="trailing" constant="20" id="Rqd-Dd-1qY"/>
-                            <constraint firstItem="6pN-hG-i3Y" firstAttribute="bottom" secondItem="Oqv-Cc-G7F" secondAttribute="top" id="bPZ-C2-BHm"/>
-                            <constraint firstItem="Oqv-Cc-G7F" firstAttribute="leading" secondItem="3hr-t9-Odm" secondAttribute="leading" constant="20" id="lDH-ZG-Buv"/>
-                            <constraint firstItem="6pN-hG-i3Y" firstAttribute="leading" secondItem="3hr-t9-Odm" secondAttribute="leading" constant="20" id="nob-3E-x1P"/>
-                            <constraint firstItem="3hr-t9-Odm" firstAttribute="top" secondItem="6pN-hG-i3Y" secondAttribute="top" id="x8O-0y-5no"/>
+                            <constraint firstItem="Y2t-Zt-Ni8" firstAttribute="bottom" secondItem="tOC-IB-kwh" secondAttribute="bottom" id="Jho-W8-sfR"/>
+                            <constraint firstItem="Y2t-Zt-Ni8" firstAttribute="trailing" secondItem="tOC-IB-kwh" secondAttribute="trailing" constant="20" id="Jxq-sQ-rHI"/>
+                            <constraint firstItem="tOC-IB-kwh" firstAttribute="leading" secondItem="Y2t-Zt-Ni8" secondAttribute="leading" constant="20" id="OhZ-uW-qjn"/>
+                            <constraint firstItem="wDc-zg-quh" firstAttribute="leading" secondItem="Y2t-Zt-Ni8" secondAttribute="leading" constant="20" id="h2c-2u-tjE"/>
+                            <constraint firstItem="Y2t-Zt-Ni8" firstAttribute="trailing" secondItem="wDc-zg-quh" secondAttribute="trailing" constant="20" id="mbL-wd-yIJ"/>
+                            <constraint firstItem="wDc-zg-quh" firstAttribute="top" secondItem="Y2t-Zt-Ni8" secondAttribute="top" id="ngx-WH-Svz"/>
+                            <constraint firstItem="wDc-zg-quh" firstAttribute="bottom" secondItem="tOC-IB-kwh" secondAttribute="top" id="pwX-D6-bRD"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="3hr-t9-Odm"/>
+                        <viewLayoutGuide key="safeArea" id="Y2t-Zt-Ni8"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo Album" id="Fqq-QV-QR6"/>
+                    <navigationItem key="navigationItem" id="DIB-We-CZc"/>
+                    <connections>
+                        <outlet property="photoAlbumCollectionView" destination="wDc-zg-quh" id="oPY-MF-tqu"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ARR-jm-181" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BxM-Xv-Xib" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2037.68115942029" y="114.50892857142857"/>
+            <point key="canvasLocation" x="2056.521739130435" y="114.50892857142857"/>
         </scene>
         <!--Virtual Tourist-->
         <scene sceneID="iBU-tb-XKq">
