@@ -49,13 +49,13 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     
     
 
-    func savePin(coordinate: CLLocationCoordinate2D){
-        let newPin = Pin(context: dataController.viewContext)
-        newPin.longitude = coordinate.longitude
-        newPin.latitude = coordinate.latitude
-        // put error handling here
-        try? dataController.viewContext.save()
-    }
+//    func savePin(coordinate: CLLocationCoordinate2D){
+//        let newPin = Pin(context: dataController.viewContext)
+//        newPin.longitude = coordinate.longitude
+//        newPin.latitude = coordinate.latitude
+//        // put error handling here
+//        try? dataController.viewContext.save()
+//    }
     
     
     @IBAction func holdGesture(_ sender: UILongPressGestureRecognizer) {
@@ -68,7 +68,8 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 annotation.coordinate = tappedCoordinate
                 annotation.title = "Long: \(tappedCoordinate.longitude) Lat: \(tappedCoordinate.latitude)"
                 mapView.addAnnotation(annotation)
-                FlickrClient.searchForPhotos(latitude: tappedCoordinate.latitude, longitude: tappedCoordinate.longitude, completion: handlePinAction(response:coordinate:error:))
+                let geoQuery = FlickrGeoQuery(longitude: tappedCoordinate.longitude, latitude: tappedCoordinate.latitude, page: 1)
+                FlickrClient.searchForPhotos(geoQuery: geoQuery, completion: handlePinAction(response:coordinate:error:))
             }
         }
     }
@@ -86,6 +87,7 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
             newPin.page = Int64(collection.photos.page)
             newPin.pages = Int64(collection.photos.pages)
             
+            
             let photoCore = collection.photos.photo
             if photoCore.count > 0 {
                 for individualPhoto in photoCore {
@@ -98,6 +100,8 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 }
             }
             try? dataController.viewContext.save()
+            //print("ObjectId from map \(newPin.objectID)")
+            
         } else {
             print(error!)
         }
@@ -130,10 +134,30 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as! PhotoAlbumViewController
+            let pin = getPinFor(coordinate: coordinate)
+            //print("ObjectId from pin tap \(pin.objectID)")
             vc.selectedCoordinate = coordinate
             vc.dataController = dataController
             mapView.deselectAnnotation(view.annotation, animated: true)
             navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func getPinFor(coordinate: CLLocationCoordinate2D) -> Pin {
+        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "latitude", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        let latPredicate = NSPredicate(format: "latitude == \(coordinate.latitude)")
+        let longPredicate = NSPredicate(format: "longitude == \(coordinate.longitude)")
+        let coordinatesPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [latPredicate, longPredicate])
+        
+        fetchRequest.predicate = coordinatesPredicate
+        fetchRequest.includesSubentities = true
+        do {
+             let pin = try dataController.viewContext.fetch(fetchRequest)
+            return pin.first!
+        } catch {
+            fatalError("Could not retrieve Pin for coordinates \(error.localizedDescription)")
         }
     }
     
