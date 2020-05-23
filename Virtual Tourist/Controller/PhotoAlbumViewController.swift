@@ -11,15 +11,33 @@ import UIKit
 import CoreLocation
 import CoreData
 
-class PhotoAlbumViewController: UIViewController, NSFetchedResultsControllerDelegate {
+class PhotoAlbumViewController: UIViewController {
     
     @IBOutlet weak var photoAlbumCollectionView: UICollectionView!
     
     var selectedCoordinate: CLLocationCoordinate2D!
     var dataController: DataController!
     var fetchedResultsController: NSFetchedResultsController<Photo>!
+    var currentPin: Pin!
     
+    @IBAction func newAlbumTapped(_ sender: Any) {
+//        let newPage = currentPin.page < currentPin.pages ? currentPin.page + 1 : currentPin.page
+//        
+//        if newPage != currentPin.page {
+//            if let photos = fetchedResultsController.fetchedObjects {
+//                for photo in photos {
+//                    currentPin.removeFromPhotos(photo)
+//                }
+//            }
+//            let flickrGeoQuery = FlickrGeoQuery(longitude: currentPin.longitude, latitude: currentPin.latitude, page: newPage)
+//            // Problem: der completionhandler für searchForPhotos passt hier nicht !!!!
+//            FlickrClient.searchForPhotos(geoQuery: flickrGeoQuery, completion: ha)
+//        }
+    }
     
+    func handleNewAlbumResponse(){
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,24 +70,23 @@ class PhotoAlbumViewController: UIViewController, NSFetchedResultsControllerDele
 
     
     func handleImageResponse(imageData: Data?, photo: Photo, error: Error?){
+        let backgroundContext: NSManagedObjectContext! = dataController.backgroundContext
         guard let imageData = imageData else {
             return
         }
-        
+        let photoId = photo.objectID
         do {
-            photo.image = imageData
-            try dataController.viewContext.save()
+            let backgroundPhoto = backgroundContext.object(with: photoId) as! Photo
+            backgroundPhoto.image = imageData
+            try dataController.backgroundContext.save()
         } catch {
             fatalError("Image could not be saved \(error.localizedDescription)")
         }
-        
-        //print("secret \(photo.secret)")
     }
     
     fileprivate func setUpFetchedResultsController() {
-        let pin = getPinFor(coordinate: self.selectedCoordinate)
-        //print("ObjectId in Collection: \(pin.objectID)")
-        let pinPredicate = NSPredicate(format: "pin = %@", pin)
+        currentPin = getPinFor(coordinate: self.selectedCoordinate)
+        let pinPredicate = NSPredicate(format: "pin = %@", currentPin)
         let photoSortDescriptor = NSSortDescriptor(key: "secret", ascending: true)
         let photosFetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
         photosFetchRequest.sortDescriptors = [photoSortDescriptor]
@@ -111,16 +128,37 @@ class PhotoAlbumViewController: UIViewController, NSFetchedResultsControllerDele
             fatalError("Could not retrieve Pin for coordinates \(error.localizedDescription)")
         }
     }
+    
+    func deletePhoto(indexPath: IndexPath){
+        let photoToDelete = fetchedResultsController.object(at: indexPath)
+        dataController.viewContext.delete(photoToDelete)
+        do {
+            try dataController.viewContext.save()
+        } catch  {
+            fatalError("Could not delete photo from collection \(error.localizedDescription)")
+        }
+        
+    }
 }
 
 extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let backgroundContext: NSManagedObjectContext! = dataController.backgroundContext
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCell", for: indexPath) as! PhotoAlbumCell
         let photo = fetchedResultsController.object(at: indexPath)
         print("Photodetails \(photo.farm)_\(photo.server)_\(photo.id)_\(photo.secret)")
         if let imageData = photo.image {
             cell.photoAlbumImageView.image = UIImage(data: imageData)
+        } else {
+            // download the image on background thread
+            let photoId = photo.objectID
+            
+            backgroundContext.perform {
+                let backgroundPhoto = backgroundContext.object(with: photoId) as! Photo
+                FlickrClient.getImageFor(photo: backgroundPhoto, completion: self.handleImageResponse(imageData:photo:error:))
+            }
         }
         
         cell.backgroundColor = .red
@@ -133,16 +171,11 @@ extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        deletePhoto(indexPath: indexPath)
+        photoAlbumCollectionView.deleteItems(at: [indexPath])
     }
     
-    //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    //        //let aPhoto = fetchedResultsController.object(at: indexPath)
-    //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCollectionViewCell", for: indexPath) as! PhotoAlbumCollectionViewCell
-    //        //cell.photoImageView.image = UIImage(named: <#T##String#>)
-    //        cell.backgroundColor = .red
-    //        return cell
-    //    }
+    
     
     
     
@@ -152,5 +185,34 @@ extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionView
     //        return fetchedResultsController.sections?.count ?? 1
     //    }
     
+}
+
+extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .update:
+            photoAlbumCollectionView.reloadItems(at: [indexPath!])
+            break
+        case .delete:
+            break
+        case .insert:
+            break
+        case .move:
+            break
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+    }
 }
 

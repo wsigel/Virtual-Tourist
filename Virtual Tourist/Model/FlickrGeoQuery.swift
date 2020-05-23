@@ -13,12 +13,12 @@ struct FlickrGeoQuery {
     var latitude: Double
     var privacyFilter = 1
     var radius = 30
-    var perPage = 20
+    var perPage = 50
     var format = "json"
-    var page: Int
+    var page: Int64
     var noJsonCallback = 1
     
-    init(longitude: Double, latitude: Double, page: Int) {
+    init(longitude: Double, latitude: Double, page: Int64) {
         self.longitude = longitude
         self.latitude = latitude
         self.page = page
