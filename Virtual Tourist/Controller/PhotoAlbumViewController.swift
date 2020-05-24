@@ -67,31 +67,10 @@ class PhotoAlbumViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setUpFetchedResultsController()
-    
         photoAlbumCollectionView.dataSource = self
         photoAlbumCollectionView.delegate = self
         fetchedResultsController.delegate = self
-        
-        guard let coordinate = self.selectedCoordinate else {
-            return
-        }
-        
-        if let photos = fetchedResultsController.fetchedObjects {
-            
-            for photo in photos {
-                if photo.image == nil {
-                    guard let serverId = photo.server, let id = photo.id, let secret = photo.secret else {
-                        return
-                    }
-
-                    FlickrClient.getImageFor(photo: photo, completion: handleImageResponse(imageData:photo:error:))
-                }
-                
-            }
-            
-        }
     }
     
 
@@ -112,7 +91,7 @@ class PhotoAlbumViewController: UIViewController {
     }
     
     fileprivate func setUpFetchedResultsController() {
-        currentPin = getPinFor(coordinate: self.selectedCoordinate)
+        //currentPin = getPinFor(coordinate: self.selectedCoordinate)
         let pinPredicate = NSPredicate(format: "pin = %@", currentPin)
         let photoSortDescriptor = NSSortDescriptor(key: "secret", ascending: true)
         let photosFetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
@@ -120,10 +99,6 @@ class PhotoAlbumViewController: UIViewController {
         photosFetchRequest.predicate = pinPredicate
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: photosFetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-        
-        //fetchedResultsController.delegate = self
-        
         
         do {
             try fetchedResultsController.performFetch()
@@ -175,7 +150,7 @@ extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionView
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCell", for: indexPath) as! PhotoAlbumCell
         let photo = fetchedResultsController.object(at: indexPath)
-        print("Photodetails \(photo.farm)_\(photo.server)_\(photo.id)_\(photo.secret)")
+        
         if let imageData = photo.image {
             cell.photoAlbumImageView.image = UIImage(data: imageData)
         } else {
@@ -202,15 +177,9 @@ extension PhotoAlbumViewController: UICollectionViewDataSource, UICollectionView
         photoAlbumCollectionView.deleteItems(at: [indexPath])
     }
     
-    
-    
-    
-    
-    
-    
-    //    func numberOfSections(in collectionView: UICollectionView) -> Int {
-    //        return fetchedResultsController.sections?.count ?? 1
-    //    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return fetchedResultsController.sections?.count ?? 1
+    }
     
 }
 
@@ -221,25 +190,20 @@ extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
         case .update:
             photoAlbumCollectionView.reloadItems(at: [indexPath!])
             break
-        case .delete:
-            break
-        case .insert:
-            break
-        case .move:
-            break
+        default: break
         }
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        
-    }
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
-    }
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+//
+//    }
+//
+//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//
+//    }
+//
+//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//
+//    }
 }
 

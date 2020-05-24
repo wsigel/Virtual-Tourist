@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: set some basic settings for radius, amount of returned records per Page, etc.
 struct FlickrGeoQuery {
     var longitude: Double
     var latitude: Double
@@ -25,30 +26,17 @@ struct FlickrGeoQuery {
     }
 }
 
+// MARK: create URL for Flickr API => flickr.photos.search
 extension FlickrGeoQuery {
     func getUrl() -> URL {
         let urlString =
             "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(SearchCriteria.apiKey)&privacy_filter=\(self.privacyFilter)&lat=\(self.latitude)&lon=\(self.longitude)&radius=\(self.radius)&per_page=\(self.perPage)&page=\(self.page)&format=\(self.format)&nojsoncallback=\(self.noJsonCallback)"
-        print("URL: \(urlString)")
         return URL(string: urlString)!
     }
 }
 
 
 
-
 struct SearchCriteria {
     static var apiKey = "845611d4e2d0258c30d6960e69e8b592"
-    static var privacyFilter = 1
-    static var radius = 30
-    static var format = "json"
-    static var noJsonCallback = 1
-    static var latitude = 0.0
-    static var longitude = 0.0
-    static var perPage = 5
-    static var page = 1
-    static var farmId = 0
-    static var serverId = ""
-    static var id = ""
-    static var secret = ""
 }

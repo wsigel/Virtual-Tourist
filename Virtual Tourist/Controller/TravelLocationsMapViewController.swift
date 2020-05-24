@@ -135,7 +135,7 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as! PhotoAlbumViewController
             let pin = getPinFor(coordinate: coordinate)
-            //print("ObjectId from pin tap \(pin.objectID)")
+            vc.currentPin = pin
             vc.selectedCoordinate = coordinate
             vc.dataController = dataController
             mapView.deselectAnnotation(view.annotation, animated: true)
