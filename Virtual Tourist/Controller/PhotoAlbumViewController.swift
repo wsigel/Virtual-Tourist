@@ -21,23 +21,49 @@ class PhotoAlbumViewController: UIViewController {
     var currentPin: Pin!
     
     @IBAction func newAlbumTapped(_ sender: Any) {
-//        let newPage = currentPin.page < currentPin.pages ? currentPin.page + 1 : currentPin.page
-//        
-//        if newPage != currentPin.page {
-//            if let photos = fetchedResultsController.fetchedObjects {
-//                for photo in photos {
-//                    currentPin.removeFromPhotos(photo)
-//                }
-//            }
-//            let flickrGeoQuery = FlickrGeoQuery(longitude: currentPin.longitude, latitude: currentPin.latitude, page: newPage)
-//            // Problem: der completionhandler für searchForPhotos passt hier nicht !!!!
-//            FlickrClient.searchForPhotos(geoQuery: flickrGeoQuery, completion: ha)
-//        }
+        let newPage = currentPin.page < currentPin.pages ? currentPin.page + 1 : 1
+        
+        if newPage != currentPin.page {
+            if let photos = fetchedResultsController.fetchedObjects {
+                for photo in photos {
+                    currentPin.removeFromPhotos(photo)
+                }
+            }
+            let flickrGeoQuery = FlickrGeoQuery(longitude: currentPin.longitude, latitude: currentPin.latitude, page: newPage)
+            
+            FlickrClient.searchForPhotos(geoQuery: flickrGeoQuery, completion: handleNewAlbumResponse(response:_:error:))
+            
+            currentPin.page = newPage
+        }
     }
     
-    func handleNewAlbumResponse(){
-        
+    
+    
+    func handleNewAlbumResponse(response: PhotosResponse?, _ coordinate: CLLocationCoordinate2D?, error: Error? ){
+        if error == nil {
+            guard let response = response else {
+                return
+            }
+            let photoCore = response.photos.photo
+            if photoCore.count > 0 {
+                for individualPhoto in photoCore {
+                    let photo = Photo(context: dataController.viewContext)
+                    photo.id = individualPhoto.id
+                    photo.secret = individualPhoto.secret
+                    photo.farm = Int64(individualPhoto.farm)
+                    photo.server = individualPhoto.server
+                    currentPin.addToPhotos(photo)
+                }
+                do {
+                    try dataController.viewContext.save()
+                } catch {
+                    fatalError("Unable to save context \(error.localizedDescription)")
+                }
+                photoAlbumCollectionView.reloadData()
+            }
+        }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +72,7 @@ class PhotoAlbumViewController: UIViewController {
     
         photoAlbumCollectionView.dataSource = self
         photoAlbumCollectionView.delegate = self
+        fetchedResultsController.delegate = self
         
         guard let coordinate = self.selectedCoordinate else {
             return
@@ -95,7 +122,7 @@ class PhotoAlbumViewController: UIViewController {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: photosFetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         
         
-        fetchedResultsController.delegate = self
+        //fetchedResultsController.delegate = self
         
         
         do {
