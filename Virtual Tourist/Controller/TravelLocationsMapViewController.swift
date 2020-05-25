@@ -34,28 +34,15 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
         if let result = try? dataController.viewContext.fetch(fetchRequest){
             pins = result
-            // to do: add pins to map
+            // add pins to map
             for pin in pins {
                 let annotation = MKPointAnnotation()
                 let coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitude)
-                
                 annotation.coordinate = coordinate
-                //annotation.title = pin.location
                 mapView.addAnnotation(annotation)
             }
         }
-        
     }
-    
-    
-
-//    func savePin(coordinate: CLLocationCoordinate2D){
-//        let newPin = Pin(context: dataController.viewContext)
-//        newPin.longitude = coordinate.longitude
-//        newPin.latitude = coordinate.latitude
-//        // put error handling here
-//        try? dataController.viewContext.save()
-//    }
     
     
     @IBAction func holdGesture(_ sender: UILongPressGestureRecognizer) {
@@ -77,7 +64,6 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     func handlePinAction(response: PhotosResponse?, coordinate: CLLocationCoordinate2D?, error: Error?){
         if error == nil {
             guard let latitude = coordinate?.latitude, let longitude = coordinate?.longitude, let collection = response else {
-                // notify user here
                 return
             }
             
@@ -100,10 +86,8 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 }
             }
             try? dataController.viewContext.save()
-            //print("ObjectId from map \(newPin.objectID)")
-            
         } else {
-            print(error!)
+            fatalError("There was an error when searching for photos: \(error!)")
         }
     }
 }

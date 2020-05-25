@@ -13,11 +13,6 @@ import UIKit
 
 class FlickrClient {
     
-//    struct SearchCriteria {
-//        static var apiKey = "845611d4e2d0258c30d6960e69e8b592"
-//    }
-    
-    
     class func searchForPhotos(geoQuery: FlickrGeoQuery?, completion: @escaping(PhotosResponse?, CLLocationCoordinate2D?, Error?) -> Void){
         
         

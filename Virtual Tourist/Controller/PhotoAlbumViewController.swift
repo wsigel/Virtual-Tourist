@@ -91,7 +91,6 @@ class PhotoAlbumViewController: UIViewController {
     }
     
     fileprivate func setUpFetchedResultsController() {
-        //currentPin = getPinFor(coordinate: self.selectedCoordinate)
         let pinPredicate = NSPredicate(format: "pin = %@", currentPin)
         let photoSortDescriptor = NSSortDescriptor(key: "secret", ascending: true)
         let photosFetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
@@ -193,17 +192,5 @@ extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
         default: break
         }
     }
-    
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-//
-//    }
-//
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//
-//    }
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//
-//    }
 }
 
