@@ -30,13 +30,13 @@ struct FlickrGeoQuery {
 extension FlickrGeoQuery {
     func getUrl() -> URL {
         let urlString =
-            "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(SearchCriteria.apiKey)&privacy_filter=\(self.privacyFilter)&lat=\(self.latitude)&lon=\(self.longitude)&radius=\(self.radius)&per_page=\(self.perPage)&page=\(self.page)&format=\(self.format)&nojsoncallback=\(self.noJsonCallback)"
+            "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Secret.apiKey)&privacy_filter=\(self.privacyFilter)&lat=\(self.latitude)&lon=\(self.longitude)&radius=\(self.radius)&per_page=\(self.perPage)&page=\(self.page)&format=\(self.format)&nojsoncallback=\(self.noJsonCallback)"
         return URL(string: urlString)!
     }
 }
 
 
 // MARK: put your personal api key here
-struct SearchCriteria {
-    static var apiKey = "845611d4e2d0258c30d6960e69e8b592"
+struct Secret {
+    static var apiKey = ""
 }
