@@ -20,6 +20,14 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // check availability of api_key for flickr
+        if Secret.apiKey == "" {
+            let alertController = UIAlertController(title: "Missing api key", message: "Will abort execution due to missing flickr api key", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action) in
+                exit(-1)
+            }))
+            present(alertController, animated: true, completion: nil)
+        }
         // Do any additional setup after loading the view.
         mapView.delegate = self
         // restore settings for region & zoom level
@@ -46,7 +54,6 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
     
     
     @IBAction func holdGesture(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == .ended {
             if sender.state == .ended {
                 let locationInView = sender.location(in: mapView)
                 let tappedCoordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
@@ -55,10 +62,10 @@ class TravelLocationsMapViewController: UIViewController, UIGestureRecognizerDel
                 annotation.coordinate = tappedCoordinate
                 annotation.title = "Long: \(tappedCoordinate.longitude) Lat: \(tappedCoordinate.latitude)"
                 mapView.addAnnotation(annotation)
+                mapView.deselectAnnotation(annotation, animated: true)
                 let geoQuery = FlickrGeoQuery(longitude: tappedCoordinate.longitude, latitude: tappedCoordinate.latitude, page: 1)
                 FlickrClient.searchForPhotos(geoQuery: geoQuery, completion: handlePinAction(response:coordinate:error:))
             }
-        }
     }
     
     func handlePinAction(response: PhotosResponse?, coordinate: CLLocationCoordinate2D?, error: Error?){
