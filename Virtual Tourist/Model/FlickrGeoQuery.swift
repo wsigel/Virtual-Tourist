@@ -38,5 +38,5 @@ extension FlickrGeoQuery {
 
 // MARK: put your personal api key here !!!
 struct Secret {
-    static var apiKey = "845611d4e2d0258c30d6960e69e8b592"
+    static var apiKey = ""
 }
